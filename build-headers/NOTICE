@@ -1,0 +1,13 @@
+These headers are bundled only so that Gonx can be built on the system it
+runs on, without a source tree.
+
+renku/      Private headers of Renku OS (github.com/RenkuOS/Source), a fork
+            of Haiku: app_server and interface kit headers, MIT licence
+            (see the notices in each file), and the Anti-Grain Geometry
+            headers (headers/libs/agg), under the licence in those files.
+
+freetype2/  FreeType headers, part of the FreeType project
+            (https://freetype.org), used under the FreeType License (FTL),
+            https://freetype.org/license.html . Portions of this software
+            are copyright (C) The FreeType Project (www.freetype.org).
+            All rights reserved.

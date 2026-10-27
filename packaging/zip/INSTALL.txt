@@ -1,0 +1,45 @@
+Gonx for Renku OS and Haiku
+===========================
+
+The Gonx concept look (cotito.free.fr, c. 2001): a window decorator, a
+control look, desktop and system colours, and fonts.
+
+Install
+-------
+Unpack the zip, open a Terminal in the gonx folder and run:
+
+    sh install.sh
+
+If a compiler is installed, this builds Gonx against your own system first,
+which is the safest way: the decorator runs inside app_server and uses its
+private classes. Without one it uses the prebuilt files, which were made on
+the Renku build named in prebuilt/BUILT_FOR. To get the compiler:
+
+    pkgman install gcc make haiku_devel
+    sh install.sh --build
+
+Everything goes into ~/config/non-packaged; no package is installed.
+Applications that are already running pick up the new controls and fonts
+when restarted; logging out and in (or rebooting) gets everything.
+
+Tested on Renku x86_64 and Haiku R1/beta6 x86_64.
+
+Undo
+----
+    gonx-theme revert      your previous decorator, controls, colours,
+                           desktop colour and fonts
+    sh uninstall.sh        reverts and removes Gonx
+
+If the desktop ever fails to start (for example after a system update):
+hold Space while booting, open "Select safe mode options" and choose
+"Disable user add-ons"; once on the desktop, run sh uninstall.sh, or
+sh install.sh --build to rebuild Gonx for the new system.
+
+Contents
+--------
+    install.sh, uninstall.sh   install and remove Gonx for this user
+    prebuilt/                  ready-made files (see prebuilt/BUILT_FOR)
+    source/                    full source, with the private app_server and
+                               FreeType headers needed to build it
+    screenshot.png             Gonx with a few apps open
+    README.md, LICENSE         description and licence (MIT)

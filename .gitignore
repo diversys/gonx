@@ -1,0 +1,4 @@
+# build output, including the sysroot copied from a Renku system
+build/
+# zips, release scratch
+dist/

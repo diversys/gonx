@@ -1,0 +1,10 @@
+resource("be:decor:info") message('deco') {
+	"name"				= "Gonx",
+	"authors"			= "Gonx contributors",
+	"short_descr"		= "After the Gonx BeOS concept",
+	"long_descr"		= "Rounded title tab with the window buttons on a raised shelf beside it, and a thick blue-grey frame. Recreates the look of the Gonx concept artwork (cotito.free.fr, c. 2001).",
+	"lic_url"			= "",
+	"lic_name"			= "MIT",
+	"support_url"		= "https://github.com/idumych/gonx",
+	float "version"		= 0.1
+};
