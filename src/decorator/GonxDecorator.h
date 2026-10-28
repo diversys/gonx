@@ -163,8 +163,8 @@ private:
 			void				_DrawShelf(Tab* tab, rgb_color base,
 									rgb_color outline, rgb_color highlight);
 			void				_DrawResizeKnob(rgb_color base);
-			void				_DrawGlyph(BRect rect,
-									const char* const rows[10], bool direct);
+			void				_DrawGlyph(BRect rect, const char* const* rows,
+									const char* const* smallRows, bool direct);
 
 			rgb_color			_FrameColor(Region region) const;
 

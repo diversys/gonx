@@ -528,7 +528,8 @@ GonxDecorator::_DrawButtons(Decorator::Tab* tab, const BRect& invalid)
 
 // Button glyphs from Momo's IceWM "Gonx" theme (store.kde.org/p/1119093,
 // 2004): 'W' white, 'S' its shadow, 'B' the pressed glyph, which drops one
-// pixel down and right and loses its shadow.
+// pixel down and right and loses its shadow. Floating windows' buttons are
+// too small for them, and get 8 x 8 versions drawn the same way.
 
 void
 GonxDecorator::_DrawClose(Decorator::Tab* tab, bool direct, BRect rect)
@@ -557,7 +558,28 @@ GonxDecorator::_DrawClose(Decorator::Tab* tab, bool direct, BRect rect)
 		"BBB...BBB.",
 		".........."
 	};
-	_DrawGlyph(rect, tab->closePressed ? kClosePressed : kClose, direct);
+	static const char* const kSmallClose[] = {
+		"WW...WW.",
+		"WWW.WWWS",
+		".WWWWWSS",
+		"..WWWSS.",
+		".WWWWW..",
+		"WWWSWWW.",
+		"WWSS.WWS",
+		".SS...SS"
+	};
+	static const char* const kSmallClosePressed[] = {
+		"........",
+		".BB...BB",
+		".BBB.BBB",
+		"..BBBBB.",
+		"...BBB..",
+		"..BBBBB.",
+		".BBB.BBB",
+		".BB...BB"
+	};
+	_DrawGlyph(rect, tab->closePressed ? kClosePressed : kClose,
+		tab->closePressed ? kSmallClosePressed : kSmallClose, direct);
 }
 
 
@@ -588,7 +610,28 @@ GonxDecorator::_DrawZoom(Decorator::Tab* tab, bool direct, BRect rect)
 		".BB.....BB",
 		".BBBB.BBBB"
 	};
-	_DrawGlyph(rect, tab->zoomPressed ? kZoomPressed : kZoom, direct);
+	static const char* const kSmallZoom[] = {
+		"WWW.WWW.",
+		"WWSS.WWS",
+		"WSS...WS",
+		".S.W...S",
+		"W...S.W.",
+		"WW...WWS",
+		"WWW.WWWS",
+		".SSS.SSS"
+	};
+	static const char* const kSmallZoomPressed[] = {
+		"........",
+		".BBB.BBB",
+		".BB...BB",
+		".B.....B",
+		"....B...",
+		".B.....B",
+		".BB...BB",
+		".BBB.BBB"
+	};
+	_DrawGlyph(rect, tab->zoomPressed ? kZoomPressed : kZoom,
+		tab->zoomPressed ? kSmallZoomPressed : kSmallZoom, direct);
 }
 
 
@@ -619,7 +662,28 @@ GonxDecorator::_DrawMinimize(Decorator::Tab* tab, bool direct, BRect rect)
 		"....BBBBBB",
 		"....BBBBBB"
 	};
+	static const char* const kSmallMinimize[] = {
+		"WWW.....",
+		"WWWS....",
+		"WWWSWWW.",
+		".SSSWWWS",
+		"..WWWWWS",
+		"..WWWWWS",
+		"..WWWWWS",
+		"...SSSSS"
+	};
+	static const char* const kSmallMinimizePressed[] = {
+		"........",
+		".BBB....",
+		".BBB....",
+		".BBB.BBB",
+		".....BBB",
+		"...BBBBB",
+		"...BBBBB",
+		"...BBBBB"
+	};
 	_DrawGlyph(rect, tab->minimizePressed ? kMinimizePressed : kMinimize,
+		tab->minimizePressed ? kSmallMinimizePressed : kSmallMinimize,
 		direct);
 }
 
@@ -1684,10 +1748,12 @@ GonxDecorator::_DrawResizeKnob(rgb_color base)
 
 
 /*!	Draws a 10 x 10 pixel glyph, scaled up by whole pixels for large fonts,
-	centred in \a rect on the frame colour.
+	centred in \a rect on the frame colour; or the 8 x 8 \a smallRows when
+	\a rect is too small for it.
 */
 void
-GonxDecorator::_DrawGlyph(BRect rect, const char* const rows[10], bool direct)
+GonxDecorator::_DrawGlyph(BRect rect, const char* const* rows,
+	const char* const* smallRows, bool direct)
 {
 	if (!rect.IsValid())
 		return;
@@ -1697,13 +1763,17 @@ GonxDecorator::_DrawGlyph(BRect rect, const char* const rows[10], bool direct)
 
 	fDrawingEngine->FillRect(rect, _FrameColor(REGION_TOP_BORDER));
 
-	const float pixel = std::max(1.0f, floorf((rect.Width() + 1) / 10));
-	const BPoint origin(
-		rect.left + floorf((rect.Width() + 1 - 10 * pixel) / 2),
-		rect.top + floorf((rect.Height() + 1 - 10 * pixel) / 2));
+	const int32 count = rect.Width() + 1 < 10 ? 8 : 10;
+	if (count == 8)
+		rows = smallRows;
 
-	for (int32 y = 0; y < 10; y++) {
-		for (int32 x = 0; x < 10; x++) {
+	const float pixel = std::max(1.0f, floorf((rect.Width() + 1) / count));
+	const BPoint origin(
+		rect.left + floorf((rect.Width() + 1 - count * pixel) / 2),
+		rect.top + floorf((rect.Height() + 1 - count * pixel) / 2));
+
+	for (int32 y = 0; y < count; y++) {
+		for (int32 x = 0; x < count; x++) {
 			rgb_color color;
 			switch (rows[y][x]) {
 				case 'W':
