@@ -13,9 +13,9 @@ screenshots; it contains no code from BeOS, Dano or Zeta.
 
 ## Install
 
-Download `gonx-0.1.zip` from the
+Download `gonx-0.2.zip` from the
 [releases](https://github.com/idumych/gonx/releases), unpack it, open a
-Terminal in the `gonx-0.1` folder and run:
+Terminal in the `gonx-0.2` folder and run:
 
 ```sh
 sh install.sh
@@ -128,7 +128,7 @@ and runs `rc`:
 ssh <renku> pkgman install -y freetype_devel   # once
 sh tools/sync-sysroot.sh <renku>                # once per Renku build
 make RC_HOST=<renku>
-sh packaging/zip/make-zip.sh 0.1                # dist/gonx-0.1.zip
+sh packaging/zip/make-zip.sh 0.2                # dist/gonx-0.2.zip
 make hpkg RC_HOST=<renku>                        # an .hpkg pinned to that build
 ```
 
@@ -138,7 +138,8 @@ make hpkg RC_HOST=<renku>                        # an .hpkg pinned to that build
 |---|---|
 | Renku x86_64, `r1~beta6_hrev60072_339` | Prebuilt, built on the system, and as an `.hpkg`. Decorator, buttons, dragging and resizing, every control in `controls-demo`, Appearance, menus, `gonx-theme apply`/`revert`, rebooting with Gonx active. |
 | Haiku R1/beta6 x86_64, `hrev59866_92` | `install.sh` building on the system, `install.sh --prebuilt`, `uninstall.sh`. Decorator and controls draw correctly; app_server unaffected. |
-| Stack & Tile, floating windows, fonts above 12 pt, dark colour schemes | Not tested yet |
+| Floating windows | Renku and Haiku R1/beta6 x86_64: the 8 × 8 button glyphs (since 0.2) fit the smaller tab. |
+| Stack & Tile, fonts above 12 pt, dark colour schemes | Not tested yet |
 | arm64 | Not built yet |
 
 ## License

@@ -6,5 +6,5 @@ resource("be:decor:info") message('deco') {
 	"lic_url"			= "",
 	"lic_name"			= "MIT",
 	"support_url"		= "https://github.com/idumych/gonx",
-	float "version"		= 0.1
+	float "version"		= 0.2
 };

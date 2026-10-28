@@ -9,7 +9,7 @@
 # build/BUILD names the system they were built for.
 set -eu
 
-version=${1:-0.1}
+version=${1:-0.2}
 root=$(cd "$(dirname "$0")/../.." && pwd)
 name=gonx-$version
 out=$root/dist/$name

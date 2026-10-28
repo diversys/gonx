@@ -12,7 +12,7 @@
 set -eu
 
 build=${1:?usage: build-hpkg.sh <build-dir> [<version>]}
-version=${2:-0.1}
+version=${2:-0.2}
 here=$(cd "$(dirname "$0")" && pwd)
 
 haiku=$(pkgman search -i -D haiku 2>/dev/null \
